@@ -1,62 +1,180 @@
-<nav class="flex items-center justify-between flex-wrap bg-gray-900 p-6">
-    <div class="flex items-center shrink-0 text-white mr-6">
-        <a href="/" class="font-semibold text-xl tracking-tight">Astro Basics</a>
-    </div>
-    <div class="block lg:hidden">
-        <button class="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white" data-theme-toggle>
-            <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
-        </button>    
-    </div>
-    <div class="w-full block grow lg:flex lg:items-center lg:w-auto">
-        <div class="text-sm lg:grow">
-            <a href="/about" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">
-                About
-            </a>
-            <a href="/contact" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white">
-                Contact
-            </a>
-        </div>
-        <div>
-            <button class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0" data-theme-toggle>
-                Dark Mode
-            </button>
-        </div>
-    </div>
-</nav>
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/john-doe-logo.png';
+
+interface Props {
+	class?: string;
+}
+
+const { class: className } = Astro.props;
+
+const links = [
+	{ href: '#skills', label: 'Skills', accent: false },
+	{ href: '#projects', label: 'Projects', accent: true },
+	{ href: '#contact', label: 'Contact me', accent: false },
+] as const;
+---
+
+<header
+	class:list={[
+		'relative z-50 w-full bg-[#fcfcfc] font-be-vietnam shadow-[0_1px_1px_rgba(0,0,0,0.14),0_2px_1px_rgba(0,0,0,0.12),0_1px_3px_rgba(0,0,0,0.2)]',
+		className,
+	]}
+>
+	<div class="flex h-[72px] items-center px-8 lg:h-auto lg:justify-between lg:px-[100px] lg:py-6">
+		<button
+			type="button"
+			class="flex flex-col items-start py-[6px] lg:hidden"
+			data-nav-toggle
+			aria-expanded="false"
+			aria-controls="mobile-nav"
+			aria-label="Open menu"
+		>
+			<img src="/images/menu.svg" alt="" width="31.9999" height="23.3123" />
+		</button>
+
+		<a href="/" class="hidden shrink-0 lg:block" aria-label="John Doe">
+			<Image src={logo} alt="John Doe — here for you" width={90} height={35} />
+		</a>
+
+		<nav class="hidden w-[350px] items-center justify-between lg:flex" aria-label="Primary">
+			{
+				links.map((link) =>
+					link.accent ? (
+						<a
+							href={link.href}
+							class="flex items-center justify-center gap-2 text-[18px] leading-normal whitespace-nowrap text-[#e84949]"
+						>
+							<span class="relative h-[21.818px] w-6 shrink-0 overflow-hidden">
+								<span class="absolute top-[4.28%] right-[35.34%] bottom-[31.07%] left-0">
+									<img src="/images/gear-big.svg" alt="" width="15.5175" height="14.107" />
+								</span>
+								<span class="absolute top-[48.68%] right-0 bottom-[4.28%] left-[52.96%]">
+									<img src="/images/gear-small.svg" alt="" width="11.2893" height="10.2631" />
+								</span>
+							</span>
+							{link.label}
+						</a>
+					) : (
+						<a
+							href={link.href}
+							class="text-[18px] leading-normal whitespace-nowrap text-black"
+						>
+							{link.label}
+						</a>
+					),
+				)
+			}
+		</nav>
+	</div>
+
+	<nav
+		id="mobile-nav"
+		class="hidden border-t border-black/5 bg-[#fcfcfc] px-8 py-6 lg:hidden"
+		aria-label="Mobile"
+	>
+		<div class="flex flex-col gap-4">
+			{
+				links.map((link) =>
+					link.accent ? (
+						<a
+							href={link.href}
+							class="flex items-center gap-2 text-[18px] leading-normal text-[#e84949]"
+							data-nav-link
+						>
+							<span class="relative h-[21.818px] w-6 shrink-0 overflow-hidden">
+								<span class="absolute top-[4.28%] right-[35.34%] bottom-[31.07%] left-0">
+									<img src="/images/gear-big.svg" alt="" width="15.5175" height="14.107" />
+								</span>
+								<span class="absolute top-[48.68%] right-0 bottom-[4.28%] left-[52.96%]">
+									<img src="/images/gear-small.svg" alt="" width="11.2893" height="10.2631" />
+								</span>
+							</span>
+							{link.label}
+						</a>
+					) : (
+						<a
+							href={link.href}
+							class="text-[18px] leading-normal text-black"
+							data-nav-link
+						>
+							{link.label}
+						</a>
+					),
+				)
+			}
+			<button
+				type="button"
+				class="mt-2 self-start text-left text-[18px] leading-normal text-black"
+				data-theme-toggle
+			>
+				Dark Mode
+			</button>
+		</div>
+	</nav>
+</header>
 
 <script>
-  const initThemeToggle = () => {
-    const buttons = document.querySelectorAll('[data-theme-toggle]');
+	const initNavbar = () => {
+		const toggle = document.querySelector('[data-nav-toggle]');
+		const menu = document.getElementById('mobile-nav');
+		const links = document.querySelectorAll('[data-nav-link]');
 
-    const isDarkMode = () => {
-      const storedTheme = window.localStorage.getItem('theme');
-      if (storedTheme) {
-        return storedTheme === 'dark';
-      }
-      return window.matchMedia('(prefers-color-scheme: dark)').matches;
-    };
+		if (!(toggle instanceof HTMLButtonElement) || !menu) {
+			return;
+		}
 
-    /** @param {boolean} dark */
-    const applyTheme = (dark: boolean) => {
-      document.documentElement.classList.toggle('dark', dark);
-      document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
-      window.localStorage.setItem('theme', dark ? 'dark' : 'light');
+		const setOpen = (open: boolean) => {
+			menu.classList.toggle('hidden', !open);
+			toggle.setAttribute('aria-expanded', String(open));
+			toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+		};
 
-      buttons.forEach((button) => {
-        button.textContent = dark ? 'Light Mode' : 'Dark Mode';
-      });
-    };
+		toggle.addEventListener('click', () => {
+			setOpen(menu.classList.contains('hidden'));
+		});
 
-    const toggleDarkMode = () => {
-      applyTheme(!isDarkMode());
-    };
+		links.forEach((link) => {
+			link.addEventListener('click', () => setOpen(false));
+		});
+	};
 
-    applyTheme(isDarkMode());
-    buttons.forEach((button) => {
-      button.addEventListener('click', toggleDarkMode);
-    });
-  };
+	const initThemeToggle = () => {
+		const buttons = document.querySelectorAll('[data-theme-toggle]');
 
-  document.addEventListener('astro:page-load', initThemeToggle);
-  initThemeToggle();
+		const isDarkMode = () => {
+			const storedTheme = window.localStorage.getItem('theme');
+			if (storedTheme) {
+				return storedTheme === 'dark';
+			}
+			return window.matchMedia('(prefers-color-scheme: dark)').matches;
+		};
+
+		/** @param {boolean} dark */
+		const applyTheme = (dark: boolean) => {
+			document.documentElement.classList.toggle('dark', dark);
+			document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+			window.localStorage.setItem('theme', dark ? 'dark' : 'light');
+
+			buttons.forEach((button) => {
+				button.textContent = dark ? 'Light Mode' : 'Dark Mode';
+			});
+		};
+
+		const toggleDarkMode = () => {
+			applyTheme(!isDarkMode());
+		};
+
+		applyTheme(isDarkMode());
+		buttons.forEach((button) => {
+			button.addEventListener('click', toggleDarkMode);
+		});
+	};
+
+	document.addEventListener('astro:page-load', () => {
+		initNavbar();
+		initThemeToggle();
+	});
+	initNavbar();
+	initThemeToggle();
 </script>

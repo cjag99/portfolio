@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+@theme {
+	--font-be-vietnam: "Be Vietnam Pro", ui-sans-serif, system-ui, sans-serif;
+}
+
 @custom-variant dark (&:where(.dark .dark *));
 
 .dark {
