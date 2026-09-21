@@ -1,0 +1,8 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="24.0938" height="24.8358" viewBox="0 0 24.0938 24.8358" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="cube">
+<path id="Polygon 1" d="M20.9795 7.06152L20.9795 17.7734L12.0469 23.0898L3.11426 17.7734L3.11426 7.06152L12.0469 1.74512L20.9795 7.06152Z" stroke="#6860E2" stroke-width="3"/>
+<line id="Line 4" y1="-1.5" x2="11.6978" y2="-1.5" transform="matrix(0.862718 0.505686 -0.475681 0.879618 2.22987 6.72823)" stroke="#6860E2" stroke-width="3"/>
+<line id="Line 5" y1="-1.5" x2="12.4202" y2="-1.5" transform="matrix(0.0192068 0.999816 -0.999783 0.0208176 11.689 11.9212)" stroke="#6860E2" stroke-width="3"/>
+<line id="Line 6" y1="-1.5" x2="12.0362" y2="-1.5" transform="matrix(0.859276 -0.511512 0.481383 0.876511 12.0277 12.8561)" stroke="#6860E2" stroke-width="3"/>
+</g>
+</svg>

@@ -21,10 +21,10 @@ const links = [
 		className,
 	]}
 >
-	<div class="flex h-[72px] items-center px-8 lg:h-auto lg:justify-between lg:px-[100px] lg:py-6">
+	<div class="flex h-18 items-center px-8 lg:h-auto lg:justify-between lg:px-25 lg:py-6">
 		<button
 			type="button"
-			class="flex flex-col items-start py-[6px] lg:hidden"
+			class="flex flex-col items-start py-1.5 lg:hidden"
 			data-nav-toggle
 			aria-expanded="false"
 			aria-controls="mobile-nav"
@@ -37,7 +37,7 @@ const links = [
 			<Image src={logo} alt="John Doe — here for you" width={90} height={35} />
 		</a>
 
-		<nav class="hidden w-[350px] items-center justify-between lg:flex" aria-label="Primary">
+		<nav class="hidden w-87.5 items-center justify-between lg:flex" aria-label="Primary">
 			{
 				links.map((link) =>
 					link.accent ? (
