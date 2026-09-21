@@ -1,0 +1,22 @@
+---
+interface Props {
+	label: string;
+	class?: string;
+	compact?: boolean;
+}
+
+const { label, class: className, compact = false } = Astro.props;
+---
+
+<div
+	class:list={[
+		'overflow-hidden bg-neutral-200',
+		!compact &&
+			'flex items-center justify-center px-1 text-center text-[10px] leading-tight font-medium text-neutral-500',
+		className,
+	]}
+	role="img"
+	aria-label={label}
+>
+	{compact ? <span class="sr-only">{label}</span> : label}
+</div>

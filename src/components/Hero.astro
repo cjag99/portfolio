@@ -1,28 +1,15 @@
 ---
-import { Image } from 'astro:assets';
-import portrait from '../assets/sample-user.png';
+import ImageSkeleton from './ImageSkeleton.astro';
 
 interface Props {
 	class?: string;
 }
 
 const { class: className } = Astro.props;
-
-const zigzagsDesktop = [
-	{ src: '/images/hero/zigzag-1.svg', top: '33.78px' },
-	{ src: '/images/hero/zigzag-2.svg', top: '46.07px' },
-	{ src: '/images/hero/zigzag-3.svg', top: '59.32px' },
-] as const;
-
-const zigzagsMobile = [
-	{ src: '/images/hero/zigzag-1-mobile.svg', left: '15.18px' },
-	{ src: '/images/hero/zigzag-2-mobile.svg', left: '7.87px' },
-	{ src: '/images/hero/zigzag-3-mobile.svg', left: '0px' },
-] as const;
 ---
 
 <section
-	class:list={['w-full bg-[#fcfcfc] font-be-vietnam px-8 py-6 min-[1440px]:px-[100px] min-[1440px]:py-[32px] [&_img]:max-w-none', className]}
+	class:list={['w-full bg-[#fcfcfc] font-be-vietnam px-8 py-6 min-[1440px]:px-[100px] min-[1440px]:py-[32px]', className]}
 >
 	<div class="flex flex-col items-center gap-8 lg:flex-row lg:items-center lg:justify-between lg:gap-10 min-[1440px]:gap-[281px]">
 		<div class="order-2 flex w-full max-w-[298px] flex-col items-start gap-3 lg:order-1 lg:max-w-[553px] min-[1440px]:shrink-0 lg:gap-[30px]">
@@ -43,81 +30,63 @@ const zigzagsMobile = [
 		</div>
 
 		<div class="relative order-1 h-[312px] w-[266px] shrink-0 lg:order-2 lg:h-[495px] lg:w-[411px]">
-			<Image
-				src={portrait}
-				alt="John Doe"
-				width={344}
-				height={389}
-				class="absolute top-[34.74px] left-[41px] h-[238px] w-[204px] object-cover object-top lg:top-[53.37px] lg:left-[43.45px] lg:h-[389.111px] lg:w-[343.85px]"
+			<ImageSkeleton
+				label="Portrait image should go here"
+				class="absolute top-[34.74px] left-[41px] h-[238px] w-[204px] lg:top-[53.37px] lg:left-[43.45px] lg:h-[389.111px] lg:w-[343.85px]"
 			/>
 
-			{
-				zigzagsMobile.map((zigzag) => (
-					<div
-						class="absolute top-[22.45px] flex h-[60.434px] w-[7.308px] items-center justify-center lg:hidden"
-						style={`left: ${zigzag.left}`}
-					>
-						<div class="rotate-90">
-							<div class="relative h-[7.308px] w-[60.434px]">
-								<div class="absolute inset-[-16.98%_-1.39%_-25.26%_-1.5%]">
-									<img src={zigzag.src} alt="" width="62.1837" height="10.3962" />
-								</div>
-							</div>
-						</div>
-					</div>
-				))
-			}
+			<ImageSkeleton
+				label="Zigzag decoration should go here"
+				compact
+				class="absolute top-[22.45px] left-0 h-[60px] w-[22px] lg:hidden"
+			/>
+			<ImageSkeleton
+				label="Zigzag decoration should go here"
+				compact
+				class="absolute top-[33.78px] left-0 hidden h-[99px] w-[38px] lg:flex"
+			/>
 
-			{
-				zigzagsDesktop.map((zigzag) => (
-					<div
-						class="absolute left-0 hidden h-[98.629px] w-[12.295px] items-center justify-center lg:flex"
-						style={`top: ${zigzag.top}`}
-					>
-						<div class="rotate-90">
-							<div class="relative h-[12.295px] w-[98.629px]">
-								<div class="absolute inset-[-10%_-0.87%_-15.18%_-0.94%]">
-									<img src={zigzag.src} alt="" width="100.414" height="15.3901" />
-								</div>
-							</div>
-						</div>
-					</div>
-				))
-			}
+			<ImageSkeleton
+				label="Cube decoration should go here"
+				compact
+				class="absolute top-[1.75px] left-[232.91px] h-[25px] w-[24px] lg:hidden"
+			/>
+			<ImageSkeleton
+				label="Cube decoration should go here"
+				compact
+				class="absolute top-0 left-[370.47px] hidden h-[40.532px] w-[40.532px] lg:flex"
+			/>
 
-			<div class="absolute top-[1.75px] left-[232.91px] lg:hidden">
-				<img src="/images/hero/cube-mobile.svg" alt="" width="24.0938" height="24.8358" />
-			</div>
-			<div class="absolute top-0 left-[370.47px] hidden lg:block">
-				<img src="/images/hero/cube.svg" alt="" width="40.5324" height="40.5324" />
-			</div>
+			<ImageSkeleton
+				label="Plus decoration should go here"
+				compact
+				class="absolute top-0 left-[103.94px] h-[20px] w-[19px] lg:hidden"
+			/>
+			<ImageSkeleton
+				label="Plus decoration should go here"
+				compact
+				class="absolute top-0 left-[164.43px] hidden h-[27px] w-[26px] lg:flex"
+			/>
 
-			<div class="absolute top-0 left-[103.94px] flex h-[20.046px] w-[19.413px] items-center justify-center lg:hidden">
-				<div class="-rotate-15">
-					<img src="/images/hero/plus-mobile.svg" alt="" width="15.6609" height="16.5572" />
-				</div>
-			</div>
-			<div class="absolute top-0 left-[164.43px] hidden lg:block">
-				<img src="/images/hero/plus.svg" alt="" width="26.3462" height="27.0216" />
-			</div>
+			<ImageSkeleton
+				label="Circle decoration should go here"
+				compact
+				class="absolute top-[281.75px] left-[22px] h-[13px] w-[14px] lg:hidden"
+			/>
+			<ImageSkeleton
+				label="Circle decoration should go here"
+				compact
+				class="absolute top-[456.67px] left-[22.56px] hidden h-[21.617px] w-[21.617px] lg:flex"
+			/>
 
-			<div class="absolute top-[281.75px] left-[22px] lg:hidden">
-				<img src="/images/hero/ellipse-mobile.svg" alt="" width="14" height="13" />
-			</div>
-			<div class="absolute top-[456.67px] left-[22.56px] hidden lg:block">
-				<img src="/images/hero/ellipse.svg" alt="" width="21.6173" height="21.6173" />
-			</div>
-
-			<div class="absolute top-[251.75px] left-[161px] flex h-[60px] w-[105px] flex-col items-start gap-3 overflow-hidden lg:hidden">
-				<img src="/images/hero/dots-mobile.svg" alt="" width="124" height="12" />
-				<img src="/images/hero/dots-mobile.svg" alt="" width="124" height="12" />
-				<img src="/images/hero/dots-mobile.svg" alt="" width="124" height="12" />
-			</div>
-			<div class="absolute top-[419px] left-[288px] hidden h-[76px] w-[120px] flex-col items-start gap-3 overflow-hidden lg:flex">
-				<img src="/images/hero/dots.svg" alt="" width="207" height="15" />
-				<img src="/images/hero/dots.svg" alt="" width="207" height="15" />
-				<img src="/images/hero/dots.svg" alt="" width="207" height="15" />
-			</div>
+			<ImageSkeleton
+				label="Dots"
+				class="absolute top-[251.75px] left-[161px] h-[60px] w-[105px] lg:hidden"
+			/>
+			<ImageSkeleton
+				label="Dots"
+				class="absolute top-[419px] left-[288px] hidden h-[76px] w-[120px] lg:flex"
+			/>
 		</div>
 	</div>
 </section>
