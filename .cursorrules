@@ -12,7 +12,7 @@
   - Define explicit `Props` interfaces in the component frontmatter when applicable.
 - **Styling**: Strictly use Tailwind CSS utility classes for layout, responsiveness, and component design.
 - **Mobile First & Responsiveness**: Every time a component or section is generated, always inspect and implement its mobile version alongside the desktop layout.
-- **Assets**: Use Astro's native `<Image />` component for optimized image rendering, or store static media in `/public` using absolute paths (`/images/...`).
+- **Assets**: Use Astro's native `<Image />` component for optimized image rendering, or store static media in `/public` using absolute paths (`/images/...`). If not specified, instead of using images just load an skeleton component or div saying that an image should go there.
 
 # 3. Astro & Dev Server Rules
 
