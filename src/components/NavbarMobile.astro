@@ -1,5 +1,5 @@
 ---
-import ImageSkeleton from './ImageSkeleton.astro';
+import { Icon } from 'astro-icon/components';
 
 interface Props {
 	class?: string;
@@ -8,12 +8,25 @@ interface Props {
 const { class: className } = Astro.props;
 
 const links = [
-	{ href: '#skills', label: 'Skills' },
-	{ href: '#projects', label: 'Projects' },
-	{ href: '#contact', label: 'Contact me', center: true },
-	{ href: '#studies', label: 'Studies' },
-	{ href: '/', label: 'Home' },
+	{ href: '/', label: 'Home', icon: 'lucide:house' },
+	{ href: '#skills', label: 'Skills', icon: 'lucide:code' },
+	{ href: '#studies', label: 'Studies', icon: 'lucide:graduation-cap' },
+	{ href: '#projects', label: 'Projects', icon: 'lucide:briefcase' },
+	{ href: '#contact', label: 'Contact me', icon: 'lucide:mail', center: true },
 ] as const;
+
+const centerSlot = Math.ceil(links.length / 2);
+let nextOrder = 1;
+const items = links.map((link) => {
+	const isCenter = 'center' in link && link.center === true;
+	let order = centerSlot;
+	if (!isCenter) {
+		if (nextOrder === centerSlot) nextOrder += 1;
+		order = nextOrder;
+		nextOrder += 1;
+	}
+	return { ...link, isCenter, order };
+});
 ---
 
 <nav
@@ -25,22 +38,24 @@ const links = [
 >
 	<div class="flex items-end justify-around px-2 pt-2 pb-3">
 		{
-			links.map((link) => (
+			items.map((item) => (
 				<a
-					href={link.href}
+					href={item.href}
 					class:list={[
 						'flex min-w-0 flex-1 flex-col items-center gap-1 text-center',
-						'center' in link && link.center && '-mt-3',
+						item.isCenter
+							? `-mt-3 order-3 text-[#e84949]`
+							: `text-black order-${item.order}`,
 					]}
+					style={`order: ${item.order}`}
 				>
-					<ImageSkeleton
-						label={`${link.label} icon`}
-						compact
-						class={'center' in link && link.center
-							? 'h-12 w-12 shrink-0 rounded-xl'
-							: 'h-7 w-7 shrink-0 rounded-md'}
+					<Icon
+						name={item.icon}
+						size={item.isCenter ? 32 : 24}
+						class="shrink-0"
+						aria-hidden="true"
 					/>
-					<span class="max-w-full truncate text-[10px] leading-tight text-black">{link.label}</span>
+					<span class="max-w-full truncate text-[10px] leading-tight">{item.label}</span>
 				</a>
 			))
 		}
