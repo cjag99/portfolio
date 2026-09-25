@@ -20,23 +20,12 @@ const links = [
 		className,
 	]}
 >
-	<div class="flex h-18 items-center px-8 lg:h-auto lg:justify-between lg:px-25 lg:py-6">
-		<button
-			type="button"
-			class="flex flex-col items-start py-1.5 lg:hidden"
-			data-nav-toggle
-			aria-expanded="false"
-			aria-controls="mobile-nav"
-			aria-label="Open menu"
-		>
-			<ImageSkeleton label="Menu icon" compact class="h-[23px] w-8" />
-		</button>
-
-		<a href="/" class="hidden shrink-0 lg:block" aria-label="John Doe">
+	<div class="flex items-center justify-between px-25 py-6">
+		<a href="/" class="shrink-0" aria-label="John Doe">
 			<ImageSkeleton label="Logo image" class="h-[35px] w-[90px]" />
 		</a>
 
-		<nav class="hidden w-87.5 items-center justify-between lg:flex" aria-label="Primary">
+		<nav class="flex w-87.5 items-center justify-between" aria-label="Primary">
 			{
 				links.map((link) =>
 					link.accent ? (
@@ -56,107 +45,4 @@ const links = [
 			}
 		</nav>
 	</div>
-
-	<nav
-		id="mobile-nav"
-		class="hidden border-t border-black/5 bg-[#fcfcfc] px-8 py-6 lg:hidden"
-		aria-label="Mobile"
-	>
-		<div class="flex flex-col gap-4">
-			{
-				links.map((link) =>
-					link.accent ? (
-						<a
-							href={link.href}
-							class="flex items-center gap-2 text-[18px] leading-normal text-[#e84949]"
-							data-nav-link
-						>
-							<ImageSkeleton label="Gears icon" compact class="h-[22px] w-6 shrink-0" />
-							{link.label}
-						</a>
-					) : (
-						<a
-							href={link.href}
-							class="text-[18px] leading-normal text-black"
-							data-nav-link
-						>
-							{link.label}
-						</a>
-					),
-				)
-			}
-			<button
-				type="button"
-				class="mt-2 self-start text-left text-[18px] leading-normal text-black"
-				data-theme-toggle
-			>
-				Dark Mode
-			</button>
-		</div>
-	</nav>
 </header>
-
-<script>
-	const initNavbar = () => {
-		const toggle = document.querySelector('[data-nav-toggle]');
-		const menu = document.getElementById('mobile-nav');
-		const links = document.querySelectorAll('[data-nav-link]');
-
-		if (!(toggle instanceof HTMLButtonElement) || !menu) {
-			return;
-		}
-
-		const setOpen = (open: boolean) => {
-			menu.classList.toggle('hidden', !open);
-			toggle.setAttribute('aria-expanded', String(open));
-			toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-		};
-
-		toggle.addEventListener('click', () => {
-			setOpen(menu.classList.contains('hidden'));
-		});
-
-		links.forEach((link) => {
-			link.addEventListener('click', () => setOpen(false));
-		});
-	};
-
-	const initThemeToggle = () => {
-		const buttons = document.querySelectorAll('[data-theme-toggle]');
-
-		const isDarkMode = () => {
-			const storedTheme = window.localStorage.getItem('theme');
-			if (storedTheme) {
-				return storedTheme === 'dark';
-			}
-			return window.matchMedia('(prefers-color-scheme: dark)').matches;
-		};
-
-		/** @param {boolean} dark */
-		const applyTheme = (dark: boolean) => {
-			document.documentElement.classList.toggle('dark', dark);
-			document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
-			window.localStorage.setItem('theme', dark ? 'dark' : 'light');
-
-			buttons.forEach((button) => {
-				button.textContent = dark ? 'Light Mode' : 'Dark Mode';
-			});
-		};
-
-		const toggleDarkMode = () => {
-			applyTheme(!isDarkMode());
-		};
-
-		applyTheme(isDarkMode());
-		buttons.forEach((button) => {
-			button.addEventListener('click', toggleDarkMode);
-		});
-	};
-
-	document.addEventListener('astro:page-load', () => {
-		initNavbar();
-		initThemeToggle();
-	});
-	initNavbar();
-	initThemeToggle();
-</script>
