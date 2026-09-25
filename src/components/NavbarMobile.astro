@@ -1,0 +1,48 @@
+---
+import ImageSkeleton from './ImageSkeleton.astro';
+
+interface Props {
+	class?: string;
+}
+
+const { class: className } = Astro.props;
+
+const links = [
+	{ href: '#skills', label: 'Skills' },
+	{ href: '#projects', label: 'Projects' },
+	{ href: '#contact', label: 'Contact me', center: true },
+	{ href: '#studies', label: 'Studies' },
+	{ href: '/', label: 'Home' },
+] as const;
+---
+
+<nav
+	class:list={[
+		'fixed inset-x-0 bottom-0 z-50 border-t border-black/10 bg-[#fcfcfc] font-be-vietnam pb-[env(safe-area-inset-bottom)]',
+		className,
+	]}
+	aria-label="Mobile"
+>
+	<div class="flex items-end justify-around px-2 pt-2 pb-3">
+		{
+			links.map((link) => (
+				<a
+					href={link.href}
+					class:list={[
+						'flex min-w-0 flex-1 flex-col items-center gap-1 text-center',
+						'center' in link && link.center && '-mt-3',
+					]}
+				>
+					<ImageSkeleton
+						label={`${link.label} icon`}
+						compact
+						class={'center' in link && link.center
+							? 'h-12 w-12 shrink-0 rounded-xl'
+							: 'h-7 w-7 shrink-0 rounded-md'}
+					/>
+					<span class="max-w-full truncate text-[10px] leading-tight text-black">{link.label}</span>
+				</a>
+			))
+		}
+	</div>
+</nav>

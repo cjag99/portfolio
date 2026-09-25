@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
+import NavbarMobile from '../components/NavbarMobile.astro';
 import Hero from '../components/Hero.astro';
 import Skills from '../components/Skills.astro';
 ---
@@ -11,4 +12,8 @@ import Skills from '../components/Skills.astro';
 	</div>
 	<Hero />
 	<Skills />
+	<div class="lg:hidden">
+		<NavbarMobile />
+		<div class="h-20" aria-hidden="true"></div>
+	</div>
 </Layout>
