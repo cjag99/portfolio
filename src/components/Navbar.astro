@@ -1,5 +1,6 @@
 ---
 import ImageSkeleton from './ImageSkeleton.astro';
+import ThemeButton from './ThemeButton.astro';
 
 interface Props {
 	class?: string;
@@ -25,24 +26,27 @@ const links = [
 			<ImageSkeleton label="Logo image" class="h-[35px] w-[90px]" />
 		</a>
 
-		<nav class="flex w-87.5 items-center justify-between" aria-label="Primary">
-			{
-				links.map((link) =>
-					link.accent ? (
-						<a
-							href={link.href}
-							class="flex items-center justify-center gap-2 text-[18px] leading-normal whitespace-nowrap text-[#e84949]"
-						>
-							<ImageSkeleton label="Gears icon" compact class="h-[22px] w-6 shrink-0" />
-							{link.label}
-						</a>
-					) : (
-						<a href={link.href} class="text-[18px] leading-normal whitespace-nowrap text-black">
-							{link.label}
-						</a>
-					),
-				)
-			}
-		</nav>
+		<div class="flex items-center gap-6">
+			<nav class="flex w-87.5 items-center justify-between" aria-label="Primary">
+				{
+					links.map((link) =>
+						link.accent ? (
+							<a
+								href={link.href}
+								class="flex items-center justify-center gap-2 text-[18px] leading-normal whitespace-nowrap text-[#e84949]"
+							>
+								<ImageSkeleton label="Gears icon" compact class="h-[22px] w-6 shrink-0" />
+								{link.label}
+							</a>
+						) : (
+							<a href={link.href} class="text-[18px] leading-normal whitespace-nowrap text-black">
+								{link.label}
+							</a>
+						),
+					)
+				}
+			</nav>
+			<ThemeButton />
+		</div>
 	</div>
 </header>

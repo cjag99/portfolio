@@ -8,7 +8,7 @@ export default defineConfig({
   integrations: [
     icon({
       include: {
-        lucide: ['code', 'briefcase', 'mail', 'graduation-cap', 'house'],
+        lucide: ['code', 'briefcase', 'mail', 'graduation-cap', 'house', 'sun', 'moon'],
         devicon: [],
       },
     }),
