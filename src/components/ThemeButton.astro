@@ -12,17 +12,38 @@ const { class: className } = Astro.props;
 	type="button"
 	data-theme-toggle
 	class:list={[
-		'inline-flex size-10 items-center justify-center rounded-full text-black',
+		'grid h-9 w-16 shrink-0 grid-cols-2 items-center overflow-visible px-1.5',
+		'lg:h-10 lg:w-24 lg:px-2',
 		className,
 	]}
 	aria-label="Toggle theme"
 	aria-pressed="false"
 >
-	<Icon name="lucide:sun" class="hidden size-6 dark:block" aria-hidden="true" />
-	<Icon name="lucide:moon" class="size-6 dark:hidden" aria-hidden="true" />
+	<span
+		data-theme-icon="sun"
+		class="col-start-1 inline-flex justify-self-start opacity-0 dark:opacity-100"
+	>
+		<Icon
+			name="lucide:sun"
+			class="size-5 text-[#ff7a18] drop-shadow-[0_0_4px_#ffb347] drop-shadow-[0_0_12px_#ff6b00] lg:size-6"
+			aria-hidden="true"
+		/>
+	</span>
+	<span
+		data-theme-icon="moon"
+		class="col-start-2 inline-flex justify-self-end dark:opacity-0"
+	>
+		<Icon
+			name="lucide:moon"
+			class="size-5 text-[#fde68a] drop-shadow-[0_0_6px_#fef9c3] drop-shadow-[0_0_14px_#e8d48b] lg:size-6"
+			aria-hidden="true"
+		/>
+	</span>
 </button>
 
 <script>
+	import { gsap } from 'gsap';
+
 	function isDark() {
 		return document.documentElement.classList.contains('dark');
 	}
@@ -32,20 +53,82 @@ const { class: className } = Astro.props;
 		localStorage.setItem('theme', dark ? 'dark' : 'light');
 	}
 
+	function getIcons(button: HTMLButtonElement) {
+		const sun = button.querySelector<HTMLElement>('[data-theme-icon="sun"]');
+		const moon = button.querySelector<HTMLElement>('[data-theme-icon="moon"]');
+		return { sun, moon };
+	}
+
 	function syncButton(button: HTMLButtonElement) {
 		const dark = isDark();
 		button.setAttribute('aria-pressed', String(dark));
 		button.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
 	}
 
+	function syncIcons(button: HTMLButtonElement) {
+		const { sun, moon } = getIcons(button);
+		if (!sun || !moon) return;
+		gsap.killTweensOf([sun, moon]);
+		const dark = isDark();
+		gsap.set(sun, { autoAlpha: dark ? 1 : 0, x: 0, scale: 1 });
+		gsap.set(moon, { autoAlpha: dark ? 0 : 1, x: 0, scale: 1 });
+	}
+
+	function animateThemeToggle(button: HTMLButtonElement, toDark: boolean) {
+		const { sun, moon } = getIcons(button);
+		if (!sun || !moon) return;
+
+		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+			syncIcons(button);
+			return;
+		}
+
+		const delta = moon.getBoundingClientRect().left - sun.getBoundingClientRect().left;
+		gsap.killTweensOf([sun, moon]);
+		button.dataset.themeAnimating = 'true';
+
+		const tl = gsap.timeline({
+			defaults: { duration: 0.32, ease: 'power2.inOut' },
+			onComplete: () => {
+				syncIcons(button);
+				delete button.dataset.themeAnimating;
+			},
+		});
+
+		if (toDark) {
+			gsap.set(moon, { autoAlpha: 1, x: 0, scale: 1 });
+			gsap.set(sun, { autoAlpha: 0, x: 0, scale: 0.65 });
+			tl.to(moon, { x: -delta })
+				.to(moon, { autoAlpha: 0, scale: 0.65, duration: 0.18 }, '-=0.14')
+				.to(sun, { autoAlpha: 1, scale: 1, duration: 0.18 }, '<');
+			return;
+		}
+
+		gsap.set(sun, { autoAlpha: 1, x: 0, scale: 1 });
+		gsap.set(moon, { autoAlpha: 0, x: 0, scale: 0.65 });
+		tl.to(sun, { x: delta })
+			.to(sun, { autoAlpha: 0, scale: 0.65, duration: 0.18 }, '-=0.14')
+			.to(moon, { autoAlpha: 1, scale: 1, duration: 0.18 }, '<');
+	}
+
 	function initThemeToggles() {
 		document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]').forEach((button) => {
 			syncButton(button);
+			syncIcons(button);
 			if (button.dataset.themeBound === 'true') return;
 			button.dataset.themeBound = 'true';
 			button.addEventListener('click', () => {
-				applyTheme(!isDark());
-				document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]').forEach(syncButton);
+				if (button.dataset.themeAnimating === 'true') return;
+				const toDark = !isDark();
+				applyTheme(toDark);
+				document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]').forEach((other) => {
+					syncButton(other);
+					if (other === button) {
+						animateThemeToggle(other, toDark);
+					} else {
+						syncIcons(other);
+					}
+				});
 			});
 		});
 	}
