@@ -18,7 +18,7 @@ const skills = [
 <section
 	id="skills"
 	class:list={[
-		'w-full bg-[#fcfcfc] font-be-vietnam px-8 py-8 min-[1440px]:px-[100px] min-[1440px]:py-[32px]',
+		'w-full bg-[#fcfcfc] font-be-vietnam px-8 py-8 min-[1440px]:px-[100px] min-[1440px]:py-[32px] dark:bg-black',
 		className,
 	]}
 >
@@ -34,7 +34,7 @@ const skills = [
 			/>
 
 			<div class="flex w-full max-w-[518px] flex-col items-center gap-6 lg:order-1 lg:items-start lg:gap-10">
-				<p class="max-w-[293px] text-center text-[18px] leading-normal text-[#818080] lg:max-w-none lg:text-left lg:whitespace-nowrap">
+				<p class="max-w-[293px] text-center text-[18px] leading-normal text-[#818080] lg:max-w-none lg:text-left lg:whitespace-nowrap dark:text-neutral-400">
 					I have a vast experience in the following web technologies:
 				</p>
 
@@ -46,7 +46,7 @@ const skills = [
 									label={skill.icon}
 									class="size-[118px] lg:size-[75px]"
 								/>
-								<p class="text-center text-[18px] leading-[29px] text-black lg:text-[16px]">
+								<p class="text-center text-[18px] leading-[29px] text-black lg:text-[16px] dark:text-white">
 									{skill.name}
 								</p>
 							</div>

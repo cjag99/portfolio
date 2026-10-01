@@ -31,7 +31,7 @@ const items = links.map((link) => {
 
 <nav
 	class:list={[
-		'fixed inset-x-0 bottom-0 z-50 border-t border-black/10 bg-[#fcfcfc] font-be-vietnam pb-[env(safe-area-inset-bottom)]',
+		'fixed inset-x-0 bottom-0 z-50 border-t border-black/10 bg-[#fcfcfc] font-be-vietnam pb-[env(safe-area-inset-bottom)] dark:border-white/10 dark:bg-black',
 		className,
 	]}
 	aria-label="Mobile"
@@ -45,7 +45,7 @@ const items = links.map((link) => {
 						'flex min-w-0 flex-1 flex-col items-center gap-1 text-center',
 						item.isCenter
 							? `-mt-3 order-3 text-[#e84949]`
-							: `text-black order-${item.order}`,
+							: `text-black dark:text-white order-${item.order}`,
 					]}
 					style={`order: ${item.order}`}
 				>

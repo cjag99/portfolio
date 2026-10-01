@@ -17,7 +17,7 @@ const links = [
 
 <header
 	class:list={[
-		'relative z-50 w-full bg-[#fcfcfc] font-be-vietnam shadow-[0_1px_1px_rgba(0,0,0,0.14),0_2px_1px_rgba(0,0,0,0.12),0_1px_3px_rgba(0,0,0,0.2)]',
+		'relative z-50 w-full bg-[#fcfcfc] font-be-vietnam shadow-[0_1px_1px_rgba(0,0,0,0.14),0_2px_1px_rgba(0,0,0,0.12),0_1px_3px_rgba(0,0,0,0.2)] dark:bg-black',
 		className,
 	]}
 >
@@ -39,7 +39,7 @@ const links = [
 								{link.label}
 							</a>
 						) : (
-							<a href={link.href} class="text-[18px] leading-normal whitespace-nowrap text-black">
+							<a href={link.href} class="text-[18px] leading-normal whitespace-nowrap text-black dark:text-white">
 								{link.label}
 							</a>
 						),
