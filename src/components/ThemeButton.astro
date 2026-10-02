@@ -21,7 +21,7 @@ const { class: className } = Astro.props;
 >
 	<span
 		data-theme-icon="sun"
-		class="col-start-1 inline-flex justify-self-start dark:opacity-0"
+		class="relative z-0 col-start-1 inline-flex justify-self-start dark:opacity-0"
 	>
 		<Icon
 			name="lucide:sun"
@@ -31,7 +31,7 @@ const { class: className } = Astro.props;
 	</span>
 	<span
 		data-theme-icon="moon"
-		class="col-start-2 inline-flex justify-self-end opacity-0 dark:opacity-100"
+		class="relative z-0 col-start-2 inline-flex justify-self-end opacity-0 dark:opacity-100"
 	>
 		<Icon
 			name="lucide:moon"
@@ -70,45 +70,82 @@ const { class: className } = Astro.props;
 		if (!sun || !moon) return;
 		gsap.killTweensOf([sun, moon]);
 		const dark = isDark();
-		gsap.set(sun, { autoAlpha: dark ? 0 : 1, x: 0, scale: 1 });
-		gsap.set(moon, { autoAlpha: dark ? 1 : 0, x: 0, scale: 1 });
+		gsap.set(sun, { autoAlpha: dark ? 0 : 1, x: 0, scale: 1, zIndex: 0 });
+		gsap.set(moon, { autoAlpha: dark ? 1 : 0, x: 0, scale: 1, zIndex: 0 });
 	}
 
-	function animateThemeToggle(button: HTMLButtonElement, toDark: boolean) {
+	function syncAllToggles() {
+		document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]').forEach((button) => {
+			syncButton(button);
+			syncIcons(button);
+		});
+	}
+
+	function syncAllLabels() {
+		document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]').forEach(syncButton);
+	}
+
+	function prefersReducedMotion() {
+		return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	}
+
+	function morphIcon(
+		button: HTMLButtonElement,
+		traveler: HTMLElement,
+		inbound: HTMLElement,
+		travelX: number,
+		onComplete: () => void,
+	) {
+		gsap.killTweensOf([traveler, inbound]);
+		button.dataset.themeAnimating = 'true';
+		gsap.set(traveler, { autoAlpha: 1, x: 0, scale: 1, zIndex: 1, transformOrigin: 'center' });
+		gsap.set(inbound, { autoAlpha: 0, x: 0, scale: 0.65, zIndex: 2, transformOrigin: 'center' });
+
+		gsap
+			.timeline({
+				defaults: { duration: 0.32, ease: 'power2.inOut' },
+				onComplete: () => {
+					gsap.set([traveler, inbound], { zIndex: 0 });
+					onComplete();
+					delete button.dataset.themeAnimating;
+				},
+			})
+			.to(traveler, { x: travelX })
+			.to(traveler, { autoAlpha: 0, scale: 0.65, duration: 0.18 }, '-=0.14')
+			.to(inbound, { autoAlpha: 1, scale: 1, duration: 0.18 }, '<');
+	}
+
+	function sunsetAnimation(button: HTMLButtonElement) {
 		const { sun, moon } = getIcons(button);
 		if (!sun || !moon) return;
 
-		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-			syncIcons(button);
+		applyTheme(true);
+		syncAllLabels();
+
+		if (prefersReducedMotion()) {
+			syncAllToggles();
 			return;
 		}
 
 		const delta = moon.getBoundingClientRect().left - sun.getBoundingClientRect().left;
-		gsap.killTweensOf([sun, moon]);
-		button.dataset.themeAnimating = 'true';
+		morphIcon(button, sun, moon, delta, () => syncAllToggles());
+	}
 
-		const tl = gsap.timeline({
-			defaults: { duration: 0.32, ease: 'power2.inOut' },
-			onComplete: () => {
-				syncIcons(button);
-				delete button.dataset.themeAnimating;
-			},
-		});
+	function dawnAnimation(button: HTMLButtonElement) {
+		const { sun, moon } = getIcons(button);
+		if (!sun || !moon) return;
 
-		if (toDark) {
-			gsap.set(sun, { autoAlpha: 1, x: 0, scale: 1 });
-			gsap.set(moon, { autoAlpha: 0, x: 0, scale: 0.65 });
-			tl.to(sun, { x: delta })
-				.to(sun, { autoAlpha: 0, scale: 0.65, duration: 0.18 }, '-=0.14')
-				.to(moon, { autoAlpha: 1, scale: 1, duration: 0.18 }, '<');
+		if (prefersReducedMotion()) {
+			applyTheme(false);
+			syncAllToggles();
 			return;
 		}
 
-		gsap.set(moon, { autoAlpha: 1, x: 0, scale: 1 });
-		gsap.set(sun, { autoAlpha: 0, x: 0, scale: 0.65 });
-		tl.to(moon, { x: -delta })
-			.to(moon, { autoAlpha: 0, scale: 0.65, duration: 0.18 }, '-=0.14')
-			.to(sun, { autoAlpha: 1, scale: 1, duration: 0.18 }, '<');
+		const delta = moon.getBoundingClientRect().left - sun.getBoundingClientRect().left;
+		morphIcon(button, moon, sun, -delta, () => {
+			applyTheme(false);
+			syncAllToggles();
+		});
 	}
 
 	function initThemeToggles() {
@@ -119,16 +156,11 @@ const { class: className } = Astro.props;
 			button.dataset.themeBound = 'true';
 			button.addEventListener('click', () => {
 				if (button.dataset.themeAnimating === 'true') return;
-				const toDark = !isDark();
-				applyTheme(toDark);
-				document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]').forEach((other) => {
-					syncButton(other);
-					if (other === button) {
-						animateThemeToggle(other, toDark);
-					} else {
-						syncIcons(other);
-					}
-				});
+				if (isDark()) {
+					dawnAnimation(button);
+				} else {
+					sunsetAnimation(button);
+				}
 			});
 		});
 	}
