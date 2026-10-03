@@ -1,0 +1,5 @@
+{
+	"greeting": "¡Hola, soy {{name}}!",
+	"name": "José Enrique Aguilar",
+	"description": "Desarrollador Full Stack junior. Tengo experiencia en React, Next.js, Vue, FastAPI, Django y Laravel. Me interesa la arquitectura y los patrones de diseño para organizar el código de forma que el producto pueda evolucionar."
+}
