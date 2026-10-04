@@ -1,8 +1,10 @@
 ---
 import "../styles/global.css";
+
+const locale = Astro.currentLocale ?? 'es';
 ---
 <!doctype html>
-<html lang="en" class="bg-white dark:bg-black">
+<html lang={locale} class="bg-white dark:bg-black">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />

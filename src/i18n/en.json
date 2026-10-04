@@ -1,0 +1,5 @@
+{
+    "greeting": "Hello, I'm {{name}}!",
+    "name": "Jose Enrique Aguilar",
+    "description": "Full Stack developer. I have experience in React, Next.js, Vue, FastAPI, Django and Laravel. I'm interested in architecture and design patterns to organize the code so that the product can evolve."
+}

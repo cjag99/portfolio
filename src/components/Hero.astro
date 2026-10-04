@@ -1,13 +1,14 @@
 ---
 import ImageSkeleton from './ImageSkeleton.astro';
-import es from '../i18n/es.json';
+import { useTranslations } from '../i18n/ui';
 
 interface Props {
 	class?: string;
 }
 
 const { class: className } = Astro.props;
-const greeting = es.greeting.replaceAll('{{name}}', es.name);
+const { t, interpolate } = useTranslations(Astro.currentLocale);
+const greeting = interpolate(t('greeting'), { name: t('name') });
 ---
 
 <section
@@ -20,7 +21,7 @@ const greeting = es.greeting.replaceAll('{{name}}', es.name);
 				<span class="block text-[28px] leading-[1.176] capitalize lg:text-[48px]">Software Developer</span>
 			</h1>
 			<p class="text-[18px] leading-[1.576] text-black/70 lg:max-w-[553px] lg:leading-normal dark:text-white/70">
-				{es.description}
+				{t('description')}
 			</p>
 			<a
 				href="#contact"
