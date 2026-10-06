@@ -1,5 +1,7 @@
 {
 	"greeting": "¡Hola, soy {{name}}!",
 	"name": "José Enrique Aguilar",
-	"description": "Desarrollador Full Stack junior. Tengo experiencia en React, Next.js, Vue, FastAPI, Django y Laravel. Me interesa la arquitectura y los patrones de diseño para organizar el código de forma que el producto pueda evolucionar."
+	"description": "Desarrollador Full Stack junior. Tengo experiencia en React, Next.js, Vue, FastAPI, Django y Laravel. Me interesa la arquitectura y los patrones de diseño para organizar el código de forma que el producto pueda evolucionar.",
+	"aboutme": "Sobre mí",
+	"aboutmeDescription": "Tras años formándome en sanidad —el que creía que era mi sueño—, decidí dar el salto a la informática. Desde que empecé a picar mis primeras líneas de código, supe que mi verdadera pasión estaba en el desarrollo.\n\nEn mi día a día creando aplicaciones web, pongo especial atención en la arquitectura de software, los patrones de diseño y las buenas prácticas. Me apasiona aprender cosas nuevas que me ayuden a seguir mejorando para estructurar código de mayor calidad y más mantenible.\n\nFuera del código, me verás disfrutando de un buen café, ya sea dando un paseo por la ciudad mientras escucho música o jugando a algo con el ordenador."
 }
