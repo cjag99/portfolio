@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "@iconify-json/devicon": "^1.2.67",
-    "@iconify-json/lucide": "^1.2.136"
+    "@iconify-json/lucide": "^1.2.136",
+    "@iconify-json/simple-icons": "^1.2.99"
   }
 }

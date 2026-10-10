@@ -1,18 +1,11 @@
 ---
-import ImageSkeleton from './ImageSkeleton.astro';
+import { Icon } from 'astro-icon/components';
 
 interface Props {
 	class?: string;
 }
 
 const { class: className } = Astro.props;
-
-const skills = [
-	{ name: 'HTML 5', icon: 'HTML 5 icon should go here', class: 'order-3 lg:order-1' },
-	{ name: 'CSS3', icon: 'CSS3 icon should go here', class: 'order-1 lg:order-2' },
-	{ name: 'JavaScript', icon: 'JavaScript icon should go here', class: 'order-2 lg:order-3' },
-	{ name: 'Bootstrap', icon: 'Bootstrap icon should go here', class: 'order-4' },
-] as const;
 ---
 
 <section
@@ -22,36 +15,149 @@ const skills = [
 		className,
 	]}
 >
-	<div class="flex flex-col items-center gap-[30px]">
-		<h2 class="text-[25px] leading-normal font-semibold text-[#e84949] lg:text-[20px] lg:font-medium">
-			Skills
-		</h2>
-
-		<div class="flex w-full flex-col items-center gap-10 lg:flex-row lg:items-center lg:justify-between">
-			<ImageSkeleton
-				label="Skills illustration should go here"
-				class="h-[186px] w-[250px] shrink-0 lg:order-2 lg:h-[414px] lg:w-[511px]"
-			/>
-
-			<div class="flex w-full max-w-[518px] flex-col items-center gap-6 lg:order-1 lg:items-start lg:gap-10">
-				<p class="max-w-[293px] text-center text-[18px] leading-normal text-[#818080] lg:max-w-none lg:text-left lg:whitespace-nowrap dark:text-neutral-400">
-					I have a vast experience in the following web technologies:
-				</p>
-
-				<div class="grid w-full grid-cols-2 justify-items-center gap-x-8 gap-y-8 lg:flex lg:w-auto lg:items-start lg:gap-[42px]">
-					{
-						skills.map((skill) => (
-							<div class:list={['flex flex-col items-center gap-1', skill.class]}>
-								<ImageSkeleton
-									label={skill.icon}
-									class="size-[118px] lg:size-[75px]"
-								/>
-								<p class="text-center text-[18px] leading-[29px] text-black lg:text-[16px] dark:text-white">
-									{skill.name}
-								</p>
-							</div>
-						))
-					}
+	<div class="flex flex-col gap-8 lg:flex-row lg:gap-10">
+		<div class="flex-1 rounded-lg border border-black/10 p-6 dark:border-white/10">
+			Frontend
+			<div class="flex flex-wrap gap-2">
+				<div class="grid grid-cols-5 gap-8 items-center justify-center text-center text-2xl font-bold">
+					<div class="flex flex-col items-center justify-center">
+					<Icon name="devicon:html5" class="text-8xl text-center" />	
+					<span>HTML</span>
+					</div>
+					<div class="flex flex-col items-center justify-center">
+						<Icon name="devicon:css3" class="text-8xl text-center" />	
+						<span>CSS</span>
+					</div>
+					<div class="flex flex-col items-center justify-center">
+						<Icon name="devicon:javascript" class="text-8xl text-center" />
+						<span>JavaScript</span>
+					</div>
+					<div class="flex flex-col items-center justify-center">
+						<Icon name="devicon:typescript" class="text-8xl text-center" />
+						<span>TypeScript</span>
+					</div>
+					<div class="flex flex-col items-center justify-center">
+						<Icon name="devicon:nodejs" class="text-8xl text-center" />
+						<span>Node.js</span>
+					</div>
+				</div>
+				<div class="grid grid-cols-5 gap-8 items-center justify-center text-center text-2xl font-bold">
+					<div class="flex flex-col items-center justify-center">
+						<Icon name="devicon:react" class="text-8xl text-center" />
+						<span>React</span>
+					</div>
+					<div class="flex flex-col items-center justify-center">
+						<Icon name="devicon:nextjs" class="text-8xl text-center" />
+						<span>Next.js</span>
+					</div>
+					<div class="flex flex-col items-center justify-center">
+						<Icon name="devicon:vuejs" class="text-8xl text-center" />
+						<span>Vue.js</span>
+					</div>
+					<div class="flex flex-col items-center justify-center">
+						<Icon name="devicon:tailwindcss" class="text-8xl text-center" />
+						<span>Tailwind CSS</span>
+					</div>
+					<div class="flex flex-col items-center justify-center">
+						<Icon name="devicon:bootstrap" class="text-8xl text-center" />
+						<span>Bootstrap</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="flex-1 rounded-lg border border-black/10 p-6 dark:border-white/10">
+			Backend
+			<div class="flex flex-wrap gap-2">
+				<div class="grid grid-cols-4 gap-8 items-center justify-center text-center text-2xl font-bold">
+					<div class="flex flex-col items-center justify-center">
+						<Icon name="devicon:java" class="text-8xl text-center" />
+						<span>Java</span>
+					</div>
+					<div class="flex flex-col items-center justify-center">
+						<Icon name="devicon:php" class="text-8xl text-center" />
+						<span>PHP</span>
+					</div>
+					<div class="flex flex-col items-center justify-center">
+						<Icon name="devicon:laravel" class="text-8xl text-center" />
+						<span>Laravel</span>
+					</div>
+					<div class="flex flex-col items-center justify-center">
+						<Icon name="devicon:python" class="text-8xl text-center" />
+						<span>Python</span>
+					</div>
+				</div>
+				<div class="grid grid-cols-3 gap-8 items-center justify-center text-center text-2xl font-bold">
+					<div class="flex flex-col items-center justify-center">
+						<Icon name="devicon:djangorest" class="text-8xl text-center" />
+						<span>Django</span>
+					</div>
+					<div class="flex flex-col items-center justify-center">
+						<Icon name="devicon:fastapi" class="text-8xl text-center" />
+						<span>FastAPI</span>
+					</div>
+					<div class="flex flex-col items-center justify-center">
+						<Icon name="devicon:flask" class="text-8xl text-center" />
+						<span>Flask</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="flex-1 rounded-lg border border-black/10 p-6 dark:border-white/10">
+			Herramientas &amp; Devops
+			<div class="flex flex-wrap gap-2">
+				<div class="grid grid-cols-5 gap-8 items-center justify-center text-center text-2xl font-bold">
+					<div class="flex flex-col items-center justify-center">
+						<Icon name="devicon:vitejs" class="text-8xl text-center" />
+						<span>Vite</span>
+					</div>
+					<div class="flex flex-col items-center justify-center">
+						<Icon name="simple-icons:jest" class="text-8xl text-center" />
+						<span>Jest</span>
+					</div>
+					<div class="flex flex-col items-center justify-center">
+						<Icon name="devicon:junit" class="text-8xl text-center" />
+						<span>JUnit</span>
+					</div>
+					<div class="flex flex-col items-center justify-center">
+						<Icon name="devicon:pytest" class="text-8xl text-center" />
+						<span>Pytest</span>
+					</div>
+					<div class="flex flex-col items-center justify-center">
+						<Icon name="devicon:git" class="text-8xl text-center" />
+						<span>Git</span>
+					</div>
+				</div>
+				<div class="grid grid-cols-5 gap-8 items-center justify-center text-center text-2xl font-bold">
+					<div class="flex flex-col items-center justify-center">
+						<Icon name="devicon:docker" class="text-8xl text-center" />
+						<span>Docker</span>
+					</div>
+					<div class="flex flex-col items-center justify-center">
+						<Icon name="devicon:mysql" class="text-8xl text-center" />
+						<span>MySQL</span>
+					</div>
+					<div class="flex flex-col items-center justify-center">
+						<Icon name="devicon:postgresql" class="text-8xl text-center" />
+						<span>PostgreSQL</span>
+					</div>
+					<div class="flex flex-col items-center justify-center">
+						<Icon name="devicon:supabase" class="text-8xl text-center" />
+						<span>Supabase</span>
+					</div>
+					<div class="flex flex-col items-center justify-center">
+						<Icon name="devicon:amazonwebservices" class="text-8xl text-center" />
+						<span>AWS</span>
+					</div>
+				</div>
+				<div class="grid grid-cols-2 gap-8 items-center justify-center text-center text-2xl font-bold">
+					<div class="flex flex-col items-center justify-center">
+						<Icon name="devicon:cursor" class="text-8xl text-center" />
+						<span>Cursor</span>
+					</div>
+					<div class="flex flex-col items-center justify-center">
+						<Icon name="devicon:claudecode" class="text-8xl text-center" />
+						<span>Claude Code</span>
+					</div>
 				</div>
 			</div>
 		</div>
