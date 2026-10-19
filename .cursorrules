@@ -10,7 +10,7 @@
   - Every major section of the single-page layout must be isolated into its own dedicated `.astro` component file.
   - Prioritize native `.astro` components for all structure and styling.
   - Define explicit `Props` interfaces in the component frontmatter when applicable.
-- **Styling**: Strictly use Tailwind CSS utility classes for layout, responsiveness, and component design.
+- **Styling**: Strictly use Tailwind CSS utility classes for layout, responsiveness, and component design. Reuse the cyberpunk tokens and HUD frame pattern in section 4; do not invent a parallel palette or opaque section backgrounds.
 - **Mobile First & Responsiveness**: Every time a component or section is generated, always inspect and implement its mobile version alongside the desktop layout.
 - **Assets**: Use Astro's native `<Image />` component for optimized image rendering, or store static media in `/public` using absolute paths (`/images/...`). If not specified, instead of using images just load an skeleton component or div saying that an image should go there.
 
@@ -23,3 +23,13 @@
   - Routing: https://docs.astro.build/en/guides/routing/
   - Components: https://docs.astro.build/en/basics/astro-components/
   - Styling: https://docs.astro.build/en/guides/styling/
+
+# 4. Cyberpunk Aesthetic
+
+Keep every new section visually consistent with Skills and `src/styles/global.css`. Light mode is a muted gray-lavender ground with the same hues at lower opacity; dark mode is a near-black panel with stronger glow. Do not fill large surfaces with neon.
+
+- **Tokens** (Tailwind utilities from `@theme`): `border` `#8B6AAF` / dark `#7A5AA0`, `hover` `#B026FF`, `panel` `#d9d6de` / dark `#0b0712`, `cyan` `#00EAFF`, `magenta` `#FF2EC4`. Font: `font-be-vietnam`.
+- **Page atmosphere**: lives on `html::before` / `html::after` only. Leave `html`/`body` and section wrappers without opaque `bg-*` so the grid and blooms show through.
+- **HUD cards** (copy `src/components/Skills.astro`): unclipped wrapper with `hover:drop-shadow-[0_0_12px_var(--color-hover)]` → inner `cyber-cut bg-border p-1 group-hover:bg-hover` gutter → `cyber-ticks` panel. Titles: uppercase, wide tracking, `text-hover`, diamond mark, `border-border` underline. Labels use `text-border` and `group-hover:text-hover`.
+- **CSS vs Tailwind**: layout, type, and color stay in utilities. Add to `global.css` only when clip-path, L-corner ticks, or page effects cannot be expressed in Tailwind. Do not put `box-shadow` on a clipped node; glow belongs on an unclipped ancestor via `filter` / `drop-shadow`.
+- **Accent use**: cyan/magenta are atmosphere and sparse highlights, not card fills or body text. Chamfers, corner ticks, and a neon gutter on hover are the default “more cyberpunk” moves—not extra rainbow gradients per component.
