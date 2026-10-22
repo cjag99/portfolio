@@ -1,0 +1,102 @@
+---
+interface Props {
+	class?: string;
+}
+
+interface Study {
+	period: string;
+	title: string;
+	place: string;
+}
+
+const { class: className } = Astro.props;
+
+const entries: Study[] = [
+	{
+		period: '2024 — 2026',
+		title: 'Técnico Superior en Desarrollo de Aplicaciones Web',
+		place: 'IES Playamar',
+	},
+	{
+		period: '2019 — 2020',
+		title: 'Técnico Superior en Laboratorio Clínico y Biomédico',
+		place: 'IES Santa Barbara',
+	},
+	{
+		period: '2017 — 2019',
+		title: 'Técnico Superior en Anatomía Patológica y Citodiagnóstico',
+		place: 'IES Los Colegiales',
+	},
+];
+---
+
+<section
+	id="studies"
+	class:list={[
+		'w-full font-be-vietnam px-4 py-6 pb-24 sm:px-8 lg:pb-6 min-[1440px]:px-[100px] min-[1440px]:py-[24px]',
+		className,
+	]}
+>
+	<ol
+		class="@container relative w-full md:[--card:min(36rem,42cqi)] md:[--step:max(0px,(100cqi-var(--card))/2)] md:[--stair-gap:3.5rem] lg:[--stair-gap:4.5rem]"
+	>
+		<div
+			class="pointer-events-none absolute top-5 bottom-5 left-[5px] w-px bg-border md:hidden"
+			aria-hidden="true"
+		></div>
+		{
+			entries.map((entry, index) => (
+				<li
+					class:list={[
+						'relative w-full ml-0 md:w-[var(--card)] md:[margin-left:calc(var(--i)*var(--step))]',
+						index < entries.length - 1 ? 'pb-3 md:pb-[var(--stair-gap)]' : 'pb-3',
+					]}
+					style={`--i: ${index}`}
+				>
+					<div class="relative z-10 flex items-start gap-3">
+						<span
+							class="mt-5 size-2.5 shrink-0 bg-hover shadow-[0_0_8px_var(--color-hover)] [clip-path:polygon(50%_0,100%_50%,50%_100%,0_50%)] md:hidden"
+							aria-hidden="true"
+						></span>
+						<article class="group relative min-w-0 w-full transition-[filter] hover:drop-shadow-[0_0_12px_var(--color-hover)]">
+							{
+								index < entries.length - 1 && (
+									<div class="pointer-events-none absolute inset-0 z-0 hidden md:block" aria-hidden="true">
+										<span class="absolute top-full left-1/2 w-px -translate-x-1/2 bg-border [height:calc(var(--stair-gap)+50%)]"></span>
+										<span class="absolute left-1/2 h-px bg-border [top:calc(100%+var(--stair-gap)+50%)] [width:calc(var(--step)-50%)]"></span>
+										<span class="absolute top-full left-1/2 size-2.5 -translate-x-1/2 -translate-y-1/2 bg-hover shadow-[0_0_8px_var(--color-hover)] [clip-path:polygon(50%_0,100%_50%,50%_100%,0_50%)]"></span>
+									</div>
+								)
+							}
+							{
+								index > 0 && (
+									<span
+										class="absolute top-1/2 left-0 z-10 hidden size-2.5 -translate-x-1/2 -translate-y-1/2 bg-hover shadow-[0_0_8px_var(--color-hover)] [clip-path:polygon(50%_0,100%_50%,50%_100%,0_50%)] md:block"
+										aria-hidden="true"
+									></span>
+								)
+							}
+							<div class="cyber-cut bg-border p-1 transition-colors group-hover:bg-hover">
+								<div class="cyber-ticks px-5 pt-5 pb-4 sm:px-6 sm:pt-6 sm:pb-5">
+									<p class="mb-2 text-[0.65rem] font-semibold tracking-[0.22em] text-border uppercase transition-colors group-hover:text-hover">
+										{entry.period}
+									</p>
+									<h3 class="mb-2 flex items-center gap-2 border-b border-border pb-2 text-[0.7rem] font-semibold tracking-[0.1em] text-hover uppercase md:whitespace-nowrap">
+										<span
+											class="size-[0.45rem] shrink-0 bg-hover shadow-[0_0_8px_var(--color-hover)] [clip-path:polygon(50%_0,100%_50%,50%_100%,0_50%)]"
+											aria-hidden="true"
+										></span>
+										{entry.title}
+									</h3>
+									<p class="text-xs font-semibold text-border transition-colors group-hover:text-hover sm:text-sm">
+										{entry.place}
+									</p>
+								</div>
+							</div>
+						</article>
+					</div>
+				</li>
+			))
+		}
+	</ol>
+</section>
